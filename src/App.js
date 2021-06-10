@@ -4,8 +4,8 @@ import './App.css';
 import MovieList from './components/MoveList';
 import MovieListHeading from './components/MoveListHeading';
 import SearchBox from './components/SearchBox';
-// import AddFavourites from './components/AddFavourites';
-// import RemoveFavourites from './components/RemoveFavourites';
+import AddFavourites from './components/AddFavourites';
+import RemoveFavourites from './components/RemoveFavourites';
 
 const App = () => {
 	const [movies, setMovies] = useState([]);
@@ -13,7 +13,7 @@ const App = () => {
 	const [searchValue, setSearchValue] = useState('');
 
 	const getMovieRequest = async (searchValue) => {
-		const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=263d22d8`;
+		const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=c3ca2efe`;
 
 		const response = await fetch(url);
 		const responseJson = await response.json();
@@ -27,39 +27,39 @@ const App = () => {
 		getMovieRequest(searchValue);
 	}, [searchValue]);
 
-	// useEffect(() => {
-	// 	const movieFavourites = JSON.parse(
-	// 		localStorage.getItem('react-movie-app-favourites')
-	// 	);
+	useEffect(() => {
+		const movieFavourites = JSON.parse(
+			localStorage.getItem('react-movie-app-favourites')
+		);
 
-	// 	if (movieFavourites) {
-	// 		setFavourites(movieFavourites);
-	// 	}
-	// }, []);
+		if (movieFavourites) {
+			setFavourites(movieFavourites);
+		}
+	}, []);
 
-	// const saveToLocalStorage = (items) => {
-	// 	localStorage.setItem('react-movie-app-favourites', JSON.stringify(items));
-	// };
+	const saveToLocalStorage = (items) => {
+		localStorage.setItem('react-movie-app-favourites', JSON.stringify(items));
+	};
 
-	// const addFavouriteMovie = (movie) => {
-	// 	const newFavouriteList = [...favourites, movie];
-	// 	setFavourites(newFavouriteList);
-	// 	saveToLocalStorage(newFavouriteList);
-	// };
+	const addFavouriteMovie = (movie) => {
+		const newFavouriteList = [...favourites, movie];
+		setFavourites(newFavouriteList);
+		saveToLocalStorage(newFavouriteList);
+	};
 
-	// const removeFavouriteMovie = (movie) => {
-	// 	const newFavouriteList = favourites.filter(
-	// 		(favourite) => favourite.imdbID !== movie.imdbID
-	// 	);
+	const removeFavouriteMovie = (movie) => {
+		const newFavouriteList = favourites.filter(
+			(favourite) => favourite.imdbID !== movie.imdbID
+		);
 
-	// 	setFavourites(newFavouriteList);
-	// 	saveToLocalStorage(newFavouriteList);
-	// };
+		setFavourites(newFavouriteList);
+		saveToLocalStorage(newFavouriteList);
+	};
 
 	return (
 		<div className='container-fluid movie-app'>
 			<div className='row d-flex align-items-center mt-4 mb-4'>
-				<MovieListHeading heading='Movies' />
+				<MovieListHeading heading='MoviesPedia' />
 				<SearchBox 
         searchValue={searchValue} 
         setSearchValue={setSearchValue}
@@ -68,18 +68,18 @@ const App = () => {
 			<div className='row'>
 				<MovieList
 					movies={movies}
-					// handleFavouritesClick={addFavouriteMovie}
-					// favouriteComponent={AddFavourites}
+					handleFavouritesClick={addFavouriteMovie}
+					favouriteComponent={AddFavourites}
 				/>
 			</div>
 			<div className='row d-flex align-items-center mt-4 mb-4'>
-				<MovieListHeading heading='Favourites' />
+				<MovieListHeading heading='Watch list' />
 			</div>
 			<div className='row'>
 				<MovieList
 					movies={favourites}
-					// handleFavouritesClick={removeFavouriteMovie}
-					// favouriteComponent={RemoveFavourites}
+					handleFavouritesClick={removeFavouriteMovie}
+					favouriteComponent={RemoveFavourites}
 				/>
 			</div>
 		</div>
